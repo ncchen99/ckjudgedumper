@@ -72,7 +72,7 @@ do
     for image in $allbase64image
     do
         echo $image | base64 -d > "$chapter/$title/images/$(echo $image | sha1sum | sed 's/[^a-z0-9]//g').png"
-        echo "s/data:image\/png;base64,$(echo "$image" | sed 's/\//\\\//g')/\/$(echo "$chapter" | jq -sRr @uri | sed 's/%0A//g')\/$(echo "$title" | jq -sRr @uri | sed 's/%0A//g')\/images\/$(echo $image | sha1sum | sed 's/[^a-z0-9]//g')\.png/g" > /tmp/sedconf
+        echo "s/data:image\/png;base64,$(echo "$image" | sed 's/\//\\\//g')/https:\/\/ncchen99.github.io\/ckjudgedumper\/ckjudge\/$(echo "$chapter" | jq -sRr @uri | sed 's/%0A//g')\/$(echo "$title" | jq -sRr @uri | sed 's/%0A//g')\/images\/$(echo $image | sha1sum | sed 's/[^a-z0-9]//g')\.png/g" > /tmp/sedconf
         sed -i -f /tmp/sedconf "$chapter/$title/Readme.md"
     done
 
@@ -119,7 +119,7 @@ function saveUnit(){
     echo "" >> "${1%/*}/Readme.md"
     for sdir in ${1%/*}/*/;
     do
-        echo "    - [$(echo $sdir | sed 's/\/$//g' | sed 's/.*\///g')](/$(echo $sdir | sed 's/\/$//g' | jq -sRr @uri | sed 's/%0A//g'))" >> "Readme.md"
+        # echo "    - [$(echo $sdir | sed 's/\/$//g' | sed 's/.*\///g')](/$(echo $sdir | sed 's/\/$//g' | jq -sRr @uri | sed 's/%0A//g'))" >> "Readme.md"
         cat "$sdir/description.html" >> "${1%/*}/${1%/*}.html"
         cat "$sdir/Readme.md" >> "${1%/*}/Readme.md"
         echo "" >> "${1%/*}/Readme.md"
