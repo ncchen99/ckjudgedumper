@@ -119,7 +119,7 @@ function saveUnit(){
     echo "" >> "${1%/*}/Readme.md"
     for sdir in ${1%/*}/*/;
     do
-        # echo "    - [$(echo $sdir | sed 's/\/$//g' | sed 's/.*\///g')](/$(echo $sdir | sed 's/\/$//g' | jq -sRr @uri | sed 's/%0A//g'))" >> "Readme.md"
+        echo "    - [$(echo $sdir | sed 's/\/$//g' | sed 's/.*\///g')](/$(echo $sdir | sed 's/\/$//g' | jq -sRr @uri | sed 's/%0A//g'))" >> "Readme.md"
         cat "$sdir/description.html" >> "${1%/*}/${1%/*}.html"
         cat "$sdir/Readme.md" >> "${1%/*}/Readme.md"
         echo "" >> "${1%/*}/Readme.md"
